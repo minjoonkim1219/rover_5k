@@ -1,0 +1,32 @@
+material rover/surface
+        {
+          receive_shadows off
+          technique
+          {
+            pass
+            {
+              texture_unit
+              {
+                texture korea.jpg
+                filtering anistropic
+                max_anisotropy 16
+              }
+            }
+          }
+        }
+material rover/bar
+        {
+          receive_shadows off
+          technique
+          {
+            pass
+            {
+              texture_unit
+              {
+                texture kari.png
+                filtering anistropic
+                max_anisotropy 16
+              }
+            }
+          }
+        }

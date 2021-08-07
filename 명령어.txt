@@ -1,0 +1,81 @@
+# 리눅스 기본 명령
+ pwd - 현재 디렉토리 위치 확인 (Print Working Directory)
+ cd [디렉토리 이름] - 해당 디렉토리 이동 (Change Directory)
+ cd .. - 이전 디렉토리로 이동
+ cd - 홈 디렉토리로 이동
+ ls - 현재 디렉토리 내용 보기
+ tree - 현재 디렉토리 내용 트리 구조로 보기
+
+# ROS2 명령
+ 패키지 생성 (C++)
+ ros2 pkg create [패키지명] --build-tye ament_cmake --dependencies rclcpp
+
+ 빌드 (~/ros2_ws/ 폴더에서 실행)
+ colcon build --symlink-install
+
+ 빌드 후 소스 하기
+ source install/setup.bash
+
+ 노드 리스트 보기
+ ros2 node list
+
+ 그래프로 보기
+ rqt_graph
+
+ 토픽 리스트 보기
+ ros2 topic list
+
+ 토픽 리스트 및 데이터 타입 보기
+ ros2 topic list -t
+
+ 토픽 받아 보기
+ ros2 topic echo [토픽명]
+
+ 토픽 발행 명령(cmd_vel 명령)
+ ros2 topic pub /rover_5k/cmd_vel geometry_msgs/msg/Twist "{linear:{x: 0.2}, angular:{z: 0.3}}"
+
+# Blender 사용하기
+ Blender에서 dae파일로 export 한다.
+ gazebo -> model editor 에서 add custom shape 으로 dae 파일을 불러 온다.
+ 이 후 수정한 뒤 저장하면 model.conf 파일과 model.sdf 파일이 생긴다. (나중에 sdf 파일을 바로 수정해도 된다.)
+
+# Gazebo 환경 설정
+source /usr/share/gazebo/setup.sh
+
+# ros2 build 후 source 하기 (잊어 먹지 말 것)
+source ~/ros2_ws/install/setup.bash
+
+# geometry_msgs::msg::Twist 메시지 (/rover_5k/cmd_vel) : rover를 이동시키는 메시지
+     linear.x 와 angular.z 로 직직과 회전을 할 수 있음.
+
+# nav_msgs::msg::Odometry (/rover_5k/odom)
+     pose.pose.position.x, pose.pose.position.y, pose.pose.position.z 로 현재 로버 위치를 알 수 있음.
+     pose.pose.orientation.z, pose.pose.orientation.w 로 현재 로버가 돌고 있음을 알 수 있음 (90도 정도 돌면 둘 다 0.7 근처가 됨.)
+
+# sensor_msgs::msg::LaserScan (/rover_5k/laser_scan)
+     ranges를 통해 벽까지 거리(m)를 읽어 올 수 있음.
+
+# gazebo plug-in
+  libgazebo_ros_diff_drive.so : 로버를 움직이게 해주는 플러그인 (cmd_vel과 odom 토픽이 생김)
+  libgazebo_ros_ray_sensor.so : Laser로 거리를 측정하는 센서(Lidar)
+
+
+# rover_5k 실행 명령어
+# 기본과제
+  - gazebo ~/ros2_ws/src/rover_5k/world/Basic.world
+  - ros2 run rover_5k MovingRover
+
+# 추가과제1
+  - gazebo ~/ros2_ws/src/rover_5k/world/FollowWall.world
+  - ros2 run rover_5k FollowWall
+
+# 추가과제2
+  - gazebo ~/ros2_ws/src/rover_5k/world/ClimbCrater.world
+  - ros2 run rover_5k ClimbCrater
+
+
+
+
+
+
+
